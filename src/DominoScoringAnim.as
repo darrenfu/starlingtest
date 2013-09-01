@@ -39,6 +39,8 @@ import flash.geom.Rectangle;
 
 import starling.animation.IAnimatable;
 import starling.core.Starling;
+import starling.extensions.PDParticleSystem;
+import starling.extensions.ParticleSystem;
 import starling.extensions.pixelmask.PixelMaskDisplayObject;
 import starling.textures.Texture;
 
@@ -65,6 +67,10 @@ public class DominoScoringAnim extends StarlingSprite implements IAnimatable {
     public static const scoreNums:Class;//dom.anim.scoring.values.img.ras
 //    [Embed(source="../../webapps/pogo/htdocs/applet/superdomino/images/all/include/whammies_super.jpg")]
 //    public static const boardZone:Class; //dom.anim.scoring.formula.zone.img.ras
+
+    // embed configuration XML
+    [Embed(source="particle.pex", mimeType="application/octet-stream")]
+    public static const ExplosionConfig:Class;
 
     public static const FRAME_RATE:int = 30;
 
@@ -122,51 +128,58 @@ public class DominoScoringAnim extends StarlingSprite implements IAnimatable {
         emblemTracerAnimSprite.setOrigin(scoringEmblemSprite.getX(), scoringEmblemSprite.getY());
         var numEmblemSparkles:int= emblemTracerAnimSprite.getNumTracers();
 
-
-
         // Particle emitter
-        var particleStreakPercent:Number= 0.6;//PropsCoreUtils.makeDouble(props, "dom.anim.scoring.particle.streak.percent");
-
+//        var particleStreakPercent:Number= 0.6;//PropsCoreUtils.makeDouble(props, "dom.anim.scoring.particle.streak.percent");
+//
         var particleRaster:Texture = Texture.fromBitmap(new smallSparkle());//mServices.getRaster("dom.anim.scoring.particle");
-        var particleRect:Rectangle= new Rectangle(0,0, particleRaster.width, particleRaster.height);
-        var particleSprite:ParticleSprite= new DominoParticleSprite();
+//        var particleRect:Rectangle= new Rectangle(0,0, particleRaster.width, particleRaster.height);
+//        var particleSprite:ParticleSprite= new DominoParticleSprite();
+//        particleSprite.setBoundsFromRectangle(scoringBgSprite.bounds);
 
+        var emitterArray:Vector.<Point> = new Vector.<Point>(numEmblemSparkles);
+//        for(var i:int= 0; i < numEmblemSparkles; i++) {
+//
+//            emitterArray[i] = new ImageStreakParticleEmitter(
+//                    particleSprite,
+//                    particleRaster,
+//                    new <Rectangle>[particleRect],
+//                    particleStreakPercent
+//            );
+//            //emitterArray[i].setBlendMode(Sprite.BLEND_USE_SOURCE);
+//            configureEmitter(
+//                    null,
+//                    emitterArray[i],
+//                    "dom.anim.scoring.particle",
+//                    FRAME_RATE);
+//        }
+//
+        var emitterOffset:Point= new Point(scoringEmblemSprite.getX(), scoringEmblemSprite.getY());
+//
+//        /*****************************/
+        var tracerLocations:Vector.<Point>= emblemTracerAnimSprite.getTracerLocations();
 
+        for(var i:int=0; i<tracerLocations.length; i++) {
+            emitterArray[i] = new Point(emitterOffset.x + tracerLocations[i].x, emitterOffset.y + tracerLocations[i].y);
+        }
+
+        //TODO: create a particle system
+        var psConfig:XML = XML(new ExplosionConfig());
+
+        // create particle system
+//        particleRaster = Texture.fromBitmap(new largeSparkle());
+        var ps:ParticleSystem = new DominoParticleSystem(psConfig, particleRaster, emitterArray, numEmblemSparkles);
+        var particleSprite:DominoParticleContainer = new DominoParticleContainer(ps);
         particleSprite.setBoundsFromRectangle(scoringBgSprite.bounds);
 
-
-        var emitterArray:Vector.<ImageParticleEmitter>= new Vector.<ImageParticleEmitter>(numEmblemSparkles);
-        for(var i:int= 0; i < numEmblemSparkles; i++) {
-
-            emitterArray[i] = new ImageStreakParticleEmitter(
-                    particleSprite,
-                    particleRaster,
-                    new <Rectangle>[particleRect],
-                    particleStreakPercent
-            );
-            //emitterArray[i].setBlendMode(Sprite.BLEND_USE_SOURCE);
-            configureEmitter(
-                    null,
-                    emitterArray[i],
-                    "dom.anim.scoring.particle",
-                    FRAME_RATE);
-        }
-
-        var emitterOffset:Point= new Point(scoringEmblemSprite.getX(), scoringEmblemSprite.getY());
-
-        /*****************************/
         var tickFunction:Function = function() {
-            var tracerLocations:Vector.<Point>= emblemTracerAnimSprite.getTracerLocations();
-
-            for(var i:int=0; i<tracerLocations.length; i++) {
-                emitterArray[i].setOrigin(emitterOffset.x + tracerLocations[i].x, emitterOffset.y + tracerLocations[i].y);
-                emitterArray[i].emit();
-            }
-
-            return true;
-        }
-
-        var  emitterTick:ITickable = new DominoEmitterTicker(tickFunction);
+            Starling.juggler.add(ps);
+            ps.start(.5);
+        };
+        var cancelFunction:Function = function() {
+//            Starling.juggler.remove(ps);
+            ps.stop();
+        };
+        var  emitterTick:ITickable = new EmitterTicker(tickFunction, cancelFunction);
         /*****************************/
 
 
@@ -263,14 +276,12 @@ public class DominoScoringAnim extends StarlingSprite implements IAnimatable {
 
         var phase2Tick:ITickable= Domino2Utils.appendTickable(linkFormulaTick, fadeInFormulaTick, true);
         phase2Tick = Domino2Utils.combineTickable(phase2Tick, emitterTick);
-//        phase2Tick = Domino2Utils.combineTickable(phase2Tick, startEmitterAnimation);
 
         //Start up the explosion
-        for(var i:int= 0; i < numEmblemSparkles; i++) {
-            phase2Tick = Domino2Utils.combineTickable(phase2Tick, emitterArray[i]);
-        }
-
-        phase2Tick = Domino2Utils.combineTickable(phase2Tick, particleSprite);
+//        for(var i:int= 0; i < numEmblemSparkles; i++) {
+//            phase2Tick = Domino2Utils.combineTickable(phase2Tick, emitterArray[i]);
+//        }
+//        phase2Tick = Domino2Utils.combineTickable(phase2Tick, particleSprite);
 
         // optional phase 3: zoom in board zone
         var phase3Tick:TickableQueue= null;

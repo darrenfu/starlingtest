@@ -5,9 +5,6 @@
       <configuration name="starlingtest" main-class="StarlingTestApp" output-file="starlingtest.swf" output-folder="$MODULE_DIR$/../out/production/starlingtest" use-html-wrapper="true" wrapper-template-path="$MODULE_DIR$/html-template">
         <dependencies target-player="11.2" framework-linkage="Merged">
           <entries>
-            <entry library-id="f0952a44-e7ba-4232-8fc3-6e05a53a4d6e">
-              <dependency linkage="Merged" />
-            </entry>
             <entry library-name="starling" library-level="project">
               <dependency linkage="Merged" />
             </entry>
@@ -60,16 +57,6 @@
     </content>
     <orderEntry type="jdk" jdkName="flex-sdk-4.6" jdkType="Flex SDK Type (new)" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module-library" exported="">
-      <library type="flex">
-        <properties id="f0952a44-e7ba-4232-8fc3-6e05a53a4d6e" />
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/libs/Starling-Extension-Graphics.swc!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
     <orderEntry type="library" exported="" name="starling" level="project" />
   </component>
 </module>

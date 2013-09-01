@@ -5,6 +5,8 @@
 //
 package {
 
+import com.pogo.ui.starling.StarlingSprite;
+
 import flash.display.BitmapData;
     import flash.display.Stage;
     import flash.events.MouseEvent;
@@ -44,23 +46,26 @@ public class StarlingMain extends Sprite {
         trace("got it");
     }
 
-	public function init(e:Event):void {
-		/*
-		addChild(new TextField(200, 50, "Hello."));
-		var stage:Stage = Starling.current.nativeStage;
-		while (!stage){
-			trace("wait");
-		}
-		stage.addEventListener(MouseEvent.RIGHT_CLICK, onRightClick);
-		drawShapes();
-		*/
-		//TODO: switch to which test case
+    public function init(e:Event):void {
+        /*
+        addChild(new TextField(200, 50, "Hello."));
+        var stage:Stage = Starling.current.nativeStage;
+        while (!stage){
+            trace("wait");
+        }
+        stage.addEventListener(MouseEvent.RIGHT_CLICK, onRightClick);
+        drawShapes();
+        */
+        //TODO: switch to which test case
 //		addChild(new ImageStripTest());
 //        addChild(new DominoSheen());
 //        addChild(new DominoSparkleTracer());
-//		addChild(new DominoScoringAnim());
+        var s:StarlingSprite = new DominoScoringAnim();
+        s.x = 100;
+        s.y = 100;
+        addChild(s);
 
-		addChild(new ParticleSys());
+//		addChild(new ParticleSys());
 	}
 
 	private function drawShapes():void {

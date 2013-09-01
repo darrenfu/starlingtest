@@ -13,7 +13,7 @@ import flash.display.MovieClip;
     import starling.utils.HAlign;
     import starling.utils.VAlign;
 
-    [SWF(width="1024", height="600", backgroundColor="#007733")]
+    [SWF(width="1024", height="800", backgroundColor="#008855")]
 public class StarlingTestApp extends MovieClip {
 
 	private var _starling:Starling;
