@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="Flex" version="4">
+  <component name="FlexBuildConfigurationManager" active="starlingtest">
+    <configurations>
+      <configuration name="starlingtest" main-class="StarlingTestApp" output-file="starlingtest.swf" output-folder="$MODULE_DIR$/../out/production/starlingtest" use-html-wrapper="true" wrapper-template-path="$MODULE_DIR$/html-template">
+        <dependencies target-player="11.2" framework-linkage="Merged">
+          <entries>
+            <entry library-id="f0952a44-e7ba-4232-8fc3-6e05a53a4d6e">
+              <dependency linkage="Merged" />
+            </entry>
+            <entry library-name="starling" library-level="project">
+              <dependency linkage="Merged" />
+            </entry>
+          </entries>
+          <sdk name="flex-sdk-4.6" />
+        </dependencies>
+        <compiler-options>
+          <map>
+            <entry key="compiler.define" value="CONFIG::Debug&#9;true" />
+          </map>
+        </compiler-options>
+        <packaging-air-desktop />
+        <packaging-android />
+        <packaging-ios />
+      </configuration>
+      <configuration name="domino2" main-class="com.pogo.game.domino2.client.DominoGameStarter" output-file="domino2.swf" output-folder="$MODULE_DIR$/../out/production/starlingtest">
+        <dependencies target-player="11.2">
+          <entries>
+            <entry library-name="starling" library-level="project">
+              <dependency linkage="Merged" />
+            </entry>
+          </entries>
+          <sdk name="flex-sdk-4.6" />
+        </dependencies>
+        <compiler-options>
+          <map>
+            <entry key="compiler.define" value="CONFIG::Debug&#9;true" />
+          </map>
+        </compiler-options>
+        <packaging-air-desktop />
+        <packaging-android />
+        <packaging-ios />
+      </configuration>
+    </configurations>
+    <compiler-options />
+  </component>
+  <component name="NewModuleRootManager" inherit-compiler-output="true">
+    <exclude-output />
+    <content url="file://$MODULE_DIR$/../pogo/fgf2">
+      <sourceFolder url="file://$MODULE_DIR$/../pogo/fgf2/as3" isTestSource="false" />
+    </content>
+    <content url="file://$MODULE_DIR$/../pogo/games">
+      <sourceFolder url="file://$MODULE_DIR$/../pogo/games/domino2/as3" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../pogo/games/monopoly/as3" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../pogo/games/scrabble/as3" isTestSource="false" />
+    </content>
+    <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/libs/pixelmask-master/src" isTestSource="false" />
+    </content>
+    <orderEntry type="jdk" jdkName="flex-sdk-4.6" jdkType="Flex SDK Type (new)" />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module-library" exported="">
+      <library type="flex">
+        <properties id="f0952a44-e7ba-4232-8fc3-6e05a53a4d6e" />
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/libs/Starling-Extension-Graphics.swc!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="library" exported="" name="starling" level="project" />
+  </component>
+</module>
+
