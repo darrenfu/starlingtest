@@ -11,7 +11,9 @@ import com.pogo.game.domino2.common.DominoBoardZone;
 import com.pogo.game.domino2.common.DominoTile;
 import com.pogo.game.domino2.util.ColoredParticleEmitter;
 import com.pogo.game.domino2.util.DominoEmitterTicker;
+import com.pogo.game.domino2.util.DominoParticleContainer;
 import com.pogo.game.domino2.util.DominoParticleSprite;
+import com.pogo.game.domino2.util.DominoParticleSystem;
 import com.pogo.game.domino2.util.ImageParticleEmitter;
 import com.pogo.game.domino2.util.ImageStreakParticleEmitter;
 import com.pogo.game.domino2.util.ParticleSprite;
@@ -29,7 +31,9 @@ import com.pogo.ui.starling.StarlingPropsUtils;
 import com.pogo.ui.starling.StarlingSprite;
 import com.pogo.ui.starling.StarlingTickableTaskUtils;
 import com.pogo.util.ITickable;
+import com.pogo.util.PogoRandom;
 import com.pogo.util.Properties;
+import com.pogo.util.Randleton;
 import com.pogo.util.TickManager;
 
 import flash.display.Bitmap;
@@ -38,11 +42,19 @@ import flash.geom.Point;
 import flash.geom.Rectangle;
 
 import starling.animation.IAnimatable;
+import starling.animation.Transitions;
+import starling.animation.Tween;
 import starling.core.Starling;
+import starling.display.BlendMode;
+import starling.display.Quad;
+import starling.extensions.ColorArgb;
+import starling.extensions.ColorArgb;
+import starling.extensions.ColorArgb;
 import starling.extensions.PDParticleSystem;
 import starling.extensions.ParticleSystem;
 import starling.extensions.pixelmask.PixelMaskDisplayObject;
 import starling.textures.Texture;
+import starling.utils.Color;
 
 public class DominoScoringAnim extends StarlingSprite implements IAnimatable {
     [Embed(source="../../webapps/pogo/htdocs/applet/domino2/images/all/include/score_shadow.png")]
@@ -56,11 +68,11 @@ public class DominoScoringAnim extends StarlingSprite implements IAnimatable {
 
     [Embed(source="../../webapps/pogo/htdocs/applet/domino2/images/all/include/large_sparkle.png")]
     public static const largeSparkle:Class;  //dom.anim.scoring.tracer.sparkle.img.ras
-    [Embed(source="../../webapps/pogo/htdocs/applet/domino2/images/all/include/small_sparkle.png")]
+    [Embed(source="../../webapps/pogo/htdocs/applet/domino2/images/all/include/small_sparkle_blur.png")]
     public static const smallSparkle:Class;  //dom.anim.dominotile.tracer.sparkle.img.ras
-    [Embed(source="../../webapps/pogo/htdocs/applet/domino2/images/all/include/dominoe_red.gif")]
-    public static const trace:Class; // dom.anim.dominotile.tracer.trace.img.ras
-    [Embed(source="../../webapps/pogo/htdocs/applet/domino2/images/en/include/e_scored_red.gif")]
+    [Embed(source="../../webapps/pogo/htdocs/applet/domino2/images/all/include/alpha/dominoe_red.gif")]
+    public static const Trace:Class; // dom.anim.dominotile.tracer.trace.img.ras
+    [Embed(source="../../webapps/pogo/htdocs/applet/domino2/images/en/include/alpha/e_scored_red.gif")]
     public static const scoreTrace:Class; // dom.anim.scoring.emblem.tracer.trace.img.ras
 
     [Embed(source="../../webapps/pogo/htdocs/applet/domino2/images/all/include/score_numbers.png")]
@@ -69,7 +81,7 @@ public class DominoScoringAnim extends StarlingSprite implements IAnimatable {
 //    public static const boardZone:Class; //dom.anim.scoring.formula.zone.img.ras
 
     // embed configuration XML
-    [Embed(source="particle.pex", mimeType="application/octet-stream")]
+    [Embed(source="particle_adjust.pex", mimeType="application/octet-stream")]
     public static const ExplosionConfig:Class;
 
     public static const FRAME_RATE:int = 30;
@@ -165,35 +177,78 @@ public class DominoScoringAnim extends StarlingSprite implements IAnimatable {
         //TODO: create a particle system
         var psConfig:XML = XML(new ExplosionConfig());
 
-        // create particle system
-//        particleRaster = Texture.fromBitmap(new largeSparkle());
-        var ps:ParticleSystem = new DominoParticleSystem(psConfig, particleRaster, emitterArray, numEmblemSparkles);
-        var particleSprite:DominoParticleContainer = new DominoParticleContainer(ps);
-        particleSprite.setBoundsFromRectangle(scoringBgSprite.bounds);
+	    //TODO: create a particle system
+//		var ps:DominoParticleSystem = new DominoParticleSystem(props, particleRaster, emitterArray, numEmblemSparkles);
+	    var psArr:Vector.<ParticleSystem> = new Vector.<ParticleSystem>(emitterArray.length, true);//emitterArray.length, true);
+	    var opaqueColors:Vector.<ColorArgb> = new <ColorArgb>[
+		    ColorArgb.fromRgb(0xffffff),
+		    ColorArgb.fromRgb(0xF8F8FF), // GhostWhite
+		    ColorArgb.fromRgb(0x87CEFA), // LightSkyBlue
+		    ColorArgb.fromRgb(0xFFD700), // gold
+		    ColorArgb.fromRgb(0xF08080), // LightCoral
+		    ColorArgb.fromRgb(0x00FF7F), // MintCream
+		    ColorArgb.fromRgb(0xDB7093), // PaleVioletRed
+        ];
+	    for (var i:int=0; i<opaqueColors.length; i++) {
+		    opaqueColors[i].alpha = 1;
+	    }
+	    var transparentColors:Vector.<ColorArgb> = new <ColorArgb>[];
+	    for (var i:int=0; i<opaqueColors.length; i++) {
+		    var color:ColorArgb = new ColorArgb();
+		    color.copyFrom(opaqueColors[i]);
+		    color.alpha = 0;
+		    transparentColors.push(color);
+	    }
+	    for (var i:int=0; i<psArr.length; i++) {
+		    psArr[i] = new PDParticleSystem(psConfig, particleRaster);
+		    psArr[i].emitterX = emitterArray[i].x;
+		    psArr[i].emitterY = emitterArray[i].y;
+		    var colorIdx:int = Randleton.instance().nextInt(transparentColors.length);
+		    (psArr[i] as PDParticleSystem).startColor = opaqueColors[colorIdx];
+		    (psArr[i] as PDParticleSystem).endColor = transparentColors[colorIdx];
+	    }
+	    var particleSprite:DominoParticleContainer = new DominoParticleContainer(psArr);
+	    particleSprite.setBoundsFromRectangle(scoringBgSprite.bounds);
+	    // darren: readjust the particle explosion location of origin point
+	    particleSprite.x = particleSprite.y = 0;
+	    var duration:Number = 0.2;//props.getNumber("dom.anim.scoring.particle.emitter.duration");
+	    var playDelay:Number = 0.4;//props.getNumber("dom.anim.scoring.particle.emitter.playdelay");
 
-        var tickFunction:Function = function() {
-            Starling.juggler.add(ps);
-            ps.start(.5);
-        };
-        var cancelFunction:Function = function() {
-//            Starling.juggler.remove(ps);
-            ps.stop();
-        };
-        var  emitterTick:ITickable = new EmitterTicker(tickFunction, cancelFunction);
+	    var tickFunction:Function = function tickFunc(currentTime:int=0) {
+		    var ps:ParticleSystem = psArr[currentTime];
+
+		    Starling.juggler.add(ps);
+		    ps.start(duration);
+//			for (var i:int=0; i<psArr.length; i++) {
+//				var ps:ParticleSystem = psArr[i];
+//				ps.start(duration);
+//			}
+
+		    if (currentTime == psArr.length - 1) {
+			    return;
+		    }
+		    Starling.juggler.delayCall(tickFunc, playDelay, ++currentTime);
+	    };
+	    var cancelFunction:Function = function() {
+		    for (var i:int=0; i<psArr.length; i++) {
+			    var ps:ParticleSystem = psArr[i];
+			    ps.stop();
+			    Starling.juggler.remove(ps);
+		    }
+	    };
+        var  emitterTick:ITickable = new DominoEmitterTicker(psArr, tickFunction, cancelFunction);
         /*****************************/
 
 
         var messageSprites:Vector.<StarlingSprite>= null;
-
 //        if (scoringCode == SCORING_CODE_TILES_ONLY) {
-            // scoring value
-            var scoringValueRaster:BitmapData= (new scoreNums() as Bitmap).bitmapData;//mServices.getBitmap("dom.anim.scoring.values");
+//            // scoring value
+//            var scoringValueRaster:BitmapData= (new scoreNums() as Bitmap).bitmapData;//mServices.getBitmap("dom.anim.scoring.values");
 //            var scoringValuesStripSprite:StarlingImageStripSprite= StarlingPropsUtils.makeImageStrip(null,
 //                    scoringValueRaster, "dom.anim.scoring.values");
 //            // if scored with only board zone and not domino tiles
 //            scoringValuesStripSprite.index = (scoreDelta / 5) - 1;
 //            scoringValuesStripSprite.setVisible(false);
-
             messageSprites = new <StarlingSprite>[
                 scoringEmblemSprite/*,
                 scoringValuesStripSprite*/];
@@ -555,7 +610,7 @@ public class DominoScoringAnim extends StarlingSprite implements IAnimatable {
 
         // tracer animation
         var sparkleRaster:Texture = Texture.fromBitmap(new smallSparkle);// mServices.getRaster(key + ".sparkle");
-        var traceRaster:BitmapData = (new trace() as Bitmap).bitmapData; // mServices.getBitmap(key + ".trace");
+        var traceRaster:BitmapData = (new Trace() as Bitmap).bitmapData; // mServices.getBitmap(key + ".trace");
 
         var tracerAnimSprite:SparkleTracerAnimSprite = SparkleTracerAnimSprite.makeSparkleTracerSpriteWithTraceSubRectForScoring(
                 null,

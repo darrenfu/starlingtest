@@ -6,6 +6,7 @@
 package {
 
 import com.pogo.ui.starling.StarlingSprite;
+import com.pogo.ui.starling.gf1.ChatBubble;
 
 import flash.display.BitmapData;
     import flash.display.Stage;
@@ -60,7 +61,8 @@ public class StarlingMain extends Sprite {
 //		addChild(new ImageStripTest());
 //        addChild(new DominoSheen());
 //        addChild(new DominoSparkleTracer());
-        var s:StarlingSprite = new DominoScoringAnim();
+//        var s:StarlingSprite = new DominoScoringAnim();
+        var s:StarlingSprite = new SpadesGF1ImageStripUpdate();
         s.x = 100;
         s.y = 100;
         addChild(s);
