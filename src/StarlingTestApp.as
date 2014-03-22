@@ -13,12 +13,13 @@ import flash.display.MovieClip;
     import starling.utils.HAlign;
     import starling.utils.VAlign;
 
-    [SWF(width="1024", height="800", backgroundColor="#008855")]
+[SWF(width="1024", height="800", backgroundColor="#008855")]
 public class StarlingTestApp extends MovieClip {
 
 	private var _starling:Starling;
 
 	public function StarlingTestApp() {
+        stage.frameRate = 60;
 		starling = new Starling(StarlingMain, stage);
 		starling.start();
         addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
@@ -28,7 +29,7 @@ public class StarlingTestApp extends MovieClip {
 
     private function onAddedToStage(e:Event):void
     {
-        stage.addEventListener(MouseEvent.RIGHT_CLICK, doNothing);
+//        stage.addEventListener(MouseEvent.RIGHT_CLICK, doNothing);
     }
     private function doNothing(e:MouseEvent):void
     {

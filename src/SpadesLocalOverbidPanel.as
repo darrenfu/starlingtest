@@ -25,6 +25,7 @@ public class SpadesLocalOverbidPanel extends Panel {
     private var offSubBounds:Rectangle = new Rectangle(116,0,5,5);
 
 	public function SpadesLocalOverbidPanel() {
+        super();
 		mOverbidPicts = new Vector.<ImageSprite>(OVERBOOK_THRESHOLD);
 		for (var i:int= 0; i < mOverbidPicts.length; ++i) {
 			mOverbidPicts[i] = new ImageSprite(Texture.fromBitmap(new interfaceBmp()),offSubBounds );

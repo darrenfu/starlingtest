@@ -445,6 +445,7 @@ public class DominoImageStripSprite extends StarlingImageStripSprite implements 
     override public function get currentAnimation():Vector.<Texture> {
         if (!_currentAnimation) {
             generateFromRaster = false;
+            //FIXME:
             _currentAnimation = generateTextures(_cacheKey);
             if(generateFromRaster)
             {

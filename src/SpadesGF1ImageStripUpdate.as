@@ -107,8 +107,8 @@ public class SpadesGF1ImageStripUpdate extends StarlingSprite implements IAnimat
 //        add( overbidPanel);
 
         var dialog:StarlingSprite = new SpadesCardGamePanel();
-        dialog.x = 200;
-        dialog.y = 200;
+//        dialog.x = 200;
+//        dialog.y = 200;
         add(dialog);
 
         Starling.juggler.add(this);

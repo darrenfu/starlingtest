@@ -62,7 +62,7 @@ public class StarlingMain extends Sprite {
 //        addChild(new DominoSheen());
 //        addChild(new DominoSparkleTracer());
 //        var s:StarlingSprite = new DominoScoringAnim();
-        var s:StarlingSprite = new SpadesGF1ImageStripUpdate();
+        var s:StarlingSprite = new ChessGamePanel_Local();
         s.x = 100;
         s.y = 100;
         addChild(s);
