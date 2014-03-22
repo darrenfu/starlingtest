@@ -16,7 +16,6 @@ import com.pogo.ui.starling.gf1.MultiList;
 import com.pogo.ui.starling.gf1.MultiListRowDisplay;
 import com.pogo.ui.starling.gf1.Panel;
 import com.pogo.ui.starling.gf1.ScrollBarConfig;
-import com.pogo.util.PogoRandom;
 import com.pogo.util.RandomGenerator;
 
 import feathers.controls.text.TextFieldTextRenderer;
@@ -26,7 +25,6 @@ import flash.geom.Rectangle;
 import flash.text.TextFormat;
 
 import starling.display.Image;
-import starling.display.Sprite;
 import starling.events.Event;
 import starling.textures.Texture;
 import starling.utils.Color;
@@ -108,12 +106,13 @@ public class ChessMultiListDemo extends Panel {
 //        this.removeEventListener(Event.ADDED_TO_STAGE, addedToStageHandler);
 
         list = new MultiList(3, false, true);
-//		list.setPreferredDisplayedRows(6);
+		list.setPreferredDisplayedRows(6);
 //        list.height = 115;
-        list.height = 110;
+        list.height = 18 * list.getPreferredDisplayedRows() + 2;
 //		list.setFillColumn(-1);
 //		list.setBackground( COLOR_LIGHT_TAN );
         display = list.getRowDisplay();
+        display.setRowHeight(int(110 / list.getPreferredDisplayedRows()));
 //		display.sort(-1);
 
         // scrollbar
@@ -161,12 +160,14 @@ public class ChessMultiListDemo extends Panel {
     }
 
     private function resizeList():void {
-        var rowIdx:int = display.addRow(["188. ", "g8-g8(Q)+ ", "g8-g8(Q)+ "]);
+//        for (var i:int = 0; i <= list.getPreferredDisplayedRows(); i ++) {
+        display.addTypicalRow(["188. ", "g8-g8(Q)+ ", "g8-g8(Q)+ "]);
 //        display.setColumnWidth(0, 25);
 //        display.setColumnWidth(1, 58);
 //        display.setColumnWidth(2, 58);
+//        }
         list.layout();
-        display.removeRow(rowIdx);
+        display.clear();
     }
 
     private function handleMoveSelected(/*event:Event*/):void {
@@ -223,14 +224,13 @@ public class ChessMultiListDemo extends Panel {
             var rowNumber:int= display.getRowCount() + 1;
             row[COLUMN_NUMBER] = rowNumber + ".";
             row[COLUMN_WHITE] = move;
-//			row[COLUMN_BLACK] = "";
+			row[COLUMN_BLACK] = "";
             display.addRow(row);
-//            display.push(rowNumber + ".");
-//            display.push(move);
         } else {
 //			var row:Array= display.getRow(display.getRowCount() - 1);
 //          row.getCell(COLUMN_BLACK).setData(move);
-            display.push(move);
+//            display.push(move);
+            display.setCell(move, display.getRowCount() - 1, COLUMN_BLACK);
         }
 
         nextColor = 1- nextColor;
@@ -251,11 +251,10 @@ public class ChessMultiListDemo extends Panel {
             if (nextColor == ChessBoardAndLogic.BLACK_PLAYER_ID) {
 //				display.removeRow(row);
                 display.removeRow(lastRow);
-//                display.pop();
-//                display.pop();
             } else {
 //				row.getCell(COLUMN_BLACK).setData("");
-                display.pop();//setCell("", lastRow, COLUMN_BLACK);
+//                display.pop();
+                display.setCell("", lastRow, COLUMN_BLACK);
 //				display.invalRow(row);
             }
 
@@ -326,9 +325,8 @@ public class ChessMultiListDemo extends Panel {
             if (move < 0) {
                 selectLastMove();
             } else {
-                //TODO
-                display.selectCell((move / 2) as int, move % 2+ 1);
-                display.scroll((move / 2) as int);
+                display.selectCell(int(move / 2), move % 2+ 1);
+                display.scroll(int(move / 2));
             }
         }
     }
@@ -350,12 +348,14 @@ public class ChessMultiListDemo extends Panel {
                     (RandomGenerator.instance().nextInt(10) > 8 ? "(Q)" : "") +
                     (RandomGenerator.instance().nextInt(5) > 3 ? "+" : "");
             addMove(randomMove);
+            if (!minButton.isEnabled) {
+                minButton.enable();
+            }
         } else if (target == minButton) {
             removeLastMove();
-            if (countMoves() <= 0) {
-                minButton.disable();
-            } else {
-                minButton.enable();
+            var toEnable:Boolean = countMoves() > 0;
+            if (minButton.isEnabled != toEnable) {
+                minButton.enable(toEnable);
             }
         }
     }

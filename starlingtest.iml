@@ -3,7 +3,12 @@
   <component name="FlexBuildConfigurationManager" active="starlingtest">
     <configurations>
       <configuration name="starlingtest" main-class="StarlingTestApp" output-file="starlingtest.swf" output-folder="$MODULE_DIR$/../out/production/starlingtest" use-html-wrapper="true" wrapper-template-path="$MODULE_DIR$/html-template">
-        <dependencies target-player="11.7" framework-linkage="Merged">
+        <dependencies target-player="11.2" framework-linkage="Merged">
+          <entries>
+            <entry library-name="pogoUI_skins" library-level="project">
+              <dependency linkage="Merged" />
+            </entry>
+          </entries>
           <sdk name="flex-sdk-4.6" />
         </dependencies>
         <compiler-options>
@@ -16,7 +21,7 @@
         <packaging-ios />
       </configuration>
       <configuration name="domino2" main-class="com.pogo.game.domino2.client.DominoGameStarter" output-file="domino2.swf" output-folder="$MODULE_DIR$/../out/production/starlingtest">
-        <dependencies target-player="11.7">
+        <dependencies target-player="11.2">
           <entries>
             <entry library-name="pogoUI_skins" library-level="project">
               <dependency linkage="Merged" />
@@ -34,7 +39,7 @@
         <packaging-ios />
       </configuration>
       <configuration name="spades2" main-class="com.pogo.game.spades2.client.SpadesGameStarter" output-file="spades2.swf" output-folder="$MODULE_DIR$/../out/production/starlingtest">
-        <dependencies target-player="11.7">
+        <dependencies target-player="11.2">
           <entries>
             <entry library-name="pogoUI_skins" library-level="project">
               <dependency linkage="Merged" />
@@ -56,11 +61,8 @@
   </component>
   <component name="NewModuleRootManager" inherit-compiler-output="true">
     <exclude-output />
-    <content url="file://D:/apache/PrimaryFeather-Starling-Framework-1a50854-1.4.1">
-      <sourceFolder url="file://D:/apache/PrimaryFeather-Starling-Framework-1a50854-1.4.1/starling/src" isTestSource="false" />
-    </content>
-    <content url="file://D:/apache/feathers-1.2.0">
-      <sourceFolder url="file://D:/apache/feathers-1.2.0/source" isTestSource="false" />
+    <content url="file://$MODULE_DIR$/../../PrimaryFeather-Starling-Framework-1a50854">
+      <sourceFolder url="file://$MODULE_DIR$/../../PrimaryFeather-Starling-Framework-1a50854/starling/src" isTestSource="false" />
     </content>
     <content url="file://$MODULE_DIR$/../pogo/fgf2">
       <sourceFolder url="file://$MODULE_DIR$/../pogo/fgf2/as3" isTestSource="false" />
@@ -70,10 +72,16 @@
       <sourceFolder url="file://$MODULE_DIR$/../pogo/games/monopoly/as3" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/../pogo/games/scrabble/as3" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/../pogo/games/spades2/as3" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../pogo/games/allin/as3" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../pogo/games/risk/as3" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../pogo/games/chess2/as3" isTestSource="false" />
     </content>
     <content url="file://$MODULE_DIR$">
       <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/libs/pixelmask-master/src" isTestSource="false" />
+    </content>
+    <content url="file://$MODULE_DIR$/../../feathers-1.2.0">
+      <sourceFolder url="file://$MODULE_DIR$/../../feathers-1.2.0/source" isTestSource="false" />
     </content>
     <orderEntry type="jdk" jdkName="flex-sdk-4.6" jdkType="Flex SDK Type (new)" />
     <orderEntry type="sourceFolder" forTests="false" />
