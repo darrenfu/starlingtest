@@ -120,9 +120,13 @@ public class ChessMultiListDemo extends Panel {
         scrollConfig.textureAtlas = Texture.fromBitmap(new SCROLLBAR_IMAGE());
         scrollConfig.thumbBound = new Rectangle(0,64,18,29);
         scrollConfig.decrementButtonBound = new Rectangle(0,0,18,17);
+        scrollConfig.decrementButtonDownBound = new Rectangle(18,0,18,17);
         scrollConfig.incrementButtonBound = new Rectangle(0,93,18,17);
+        scrollConfig.incrementButtonDownBound = new Rectangle(18,93,18,17);
         scrollConfig.minimumTrackBound = new Rectangle(0,17,18,47);
         scrollConfig.maximumTrackBound = new Rectangle(0,17,18,47);
+        scrollConfig.minimumTrackDisabledBound = new Rectangle(18,17,18,38);
+        scrollConfig.maximumTrackDisabledBound = new Rectangle(18,55,18,38);
         display.scrollConfig = scrollConfig;
 //        display.dataChangeOnComplete = function():void {
 //            var client:ChessClient= ChessClient(chessPanel.getClient());
