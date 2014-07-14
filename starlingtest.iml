@@ -2,8 +2,13 @@
 <module type="Flex" version="4">
   <component name="FlexBuildConfigurationManager" active="starlingtest">
     <configurations>
-      <configuration name="starlingtest" main-class="StarlingTestApp" output-file="starlingtest.swf" output-folder="$MODULE_DIR$/../out/production/starlingtest" use-html-wrapper="true" wrapper-template-path="$MODULE_DIR$/html-template">
+      <configuration name="starlingtest" main-class="FlashStarter" output-file="starlingtest.swf" output-folder="$MODULE_DIR$/../out/production/starlingtest" use-html-wrapper="true" wrapper-template-path="$MODULE_DIR$/html-template">
         <dependencies target-player="11.7" framework-linkage="Merged">
+          <entries>
+            <entry library-name="pogoUI_skins" library-level="project">
+              <dependency linkage="Merged" />
+            </entry>
+          </entries>
           <sdk name="flex-sdk-4.6" />
         </dependencies>
         <compiler-options>
@@ -51,11 +56,121 @@
         <packaging-android />
         <packaging-ios />
       </configuration>
+      <configuration name="risk" main-class="com.pogo.game.risk.client.RiskGameStarter" output-file="risk.swf" output-folder="$MODULE_DIR$/../out/production/starlingtest">
+        <dependencies target-player="11.7">
+          <entries>
+            <entry library-name="DConsole2.3" library-level="project">
+              <dependency linkage="Merged" />
+            </entry>
+            <entry library-name="pogoUI_skins" library-level="project">
+              <dependency linkage="Merged" />
+            </entry>
+          </entries>
+          <sdk name="flex-sdk-4.6" />
+        </dependencies>
+        <compiler-options>
+          <map>
+            <entry key="compiler.define" value="CONFIG::Debug&#9;true" />
+          </map>
+        </compiler-options>
+        <packaging-air-desktop />
+        <packaging-android />
+        <packaging-ios />
+      </configuration>
+      <configuration name="canasta" main-class="com.pogo.game.canasta.client.CanastaGameStarter" output-file="canasta.swf" output-folder="$MODULE_DIR$/../out/production/starlingtest">
+        <dependencies target-player="11.7">
+          <entries>
+            <entry library-name="pogoUI_skins" library-level="project">
+              <dependency linkage="Merged" />
+            </entry>
+          </entries>
+          <sdk name="flex-sdk-4.6" />
+        </dependencies>
+        <compiler-options>
+          <map>
+            <entry key="compiler.define" value="CONFIG::Debug&#9;true" />
+          </map>
+        </compiler-options>
+        <packaging-air-desktop />
+        <packaging-android />
+        <packaging-ios />
+      </configuration>
+      <configuration name="mlslots" main-class="com.pogo.game.MLSlotsGameLauncher" output-file="mlslots.swf" output-folder="$MODULE_DIR$/../out/production/starlingtest">
+        <dependencies target-player="11.7">
+          <entries>
+            <entry library-name="pogoUI_skins" library-level="project">
+              <dependency linkage="Merged" />
+            </entry>
+          </entries>
+          <sdk name="flex-sdk-4.6" />
+        </dependencies>
+        <compiler-options>
+          <map>
+            <entry key="compiler.define" value="CONFIG::Debug&#9;true" />
+          </map>
+        </compiler-options>
+        <packaging-air-desktop />
+        <packaging-android />
+        <packaging-ios />
+      </configuration>
+      <configuration name="peaks" main-class="com.pogo.game.peaks.client.PeaksGameLauncher" output-file="peaks.swf" output-folder="$MODULE_DIR$/../out/production/starlingtest">
+        <dependencies target-player="11.7">
+          <entries>
+            <entry library-name="pogoUI_skins" library-level="project">
+              <dependency linkage="Merged" />
+            </entry>
+          </entries>
+          <sdk name="flex-sdk-4.6" />
+        </dependencies>
+        <compiler-options>
+          <map>
+            <entry key="compiler.define" value="CONFIG::Debug&#9;true" />
+          </map>
+        </compiler-options>
+        <packaging-air-desktop />
+        <packaging-android />
+        <packaging-ios />
+      </configuration>
+      <configuration name="chess2" main-class="com.pogo.game.chess2.client.ChessGameStarter" output-file="chess2.swf" output-folder="$MODULE_DIR$/../out/production/starlingtest">
+        <dependencies target-player="11.7">
+          <entries>
+            <entry library-name="pogoUI_skins" library-level="project">
+              <dependency linkage="Merged" />
+            </entry>
+          </entries>
+          <sdk name="flex-sdk-4.6" />
+        </dependencies>
+        <compiler-options>
+          <map>
+            <entry key="compiler.define" value="CONFIG::Debug&#9;true" />
+          </map>
+        </compiler-options>
+        <packaging-air-desktop />
+        <packaging-android />
+        <packaging-ios />
+      </configuration>
+      <configuration name="mahjong2" main-class="com.pogo.game.mahjong2.client.Mahjong2GameStarter" output-file="mahjong2.swf" output-folder="$MODULE_DIR$/../out/production/starlingtest">
+        <dependencies target-player="11.7">
+          <entries>
+            <entry library-name="pogoUI_skins" library-level="project">
+              <dependency linkage="Merged" />
+            </entry>
+          </entries>
+          <sdk name="flex-sdk-4.6" />
+        </dependencies>
+        <compiler-options>
+          <map>
+            <entry key="compiler.define" value="CONFIG::Debug&#9;true" />
+          </map>
+        </compiler-options>
+        <packaging-air-desktop />
+        <packaging-android />
+        <packaging-ios />
+      </configuration>
     </configurations>
     <compiler-options />
   </component>
-  <component name="NewModuleRootManager" inherit-compiler-output="true">
-    <exclude-output />
+  <component name="NewModuleRootManager" inherit-compiler-output="false">
     <content url="file://D:/apache/PrimaryFeather-Starling-Framework-1a50854-1.4.1">
       <sourceFolder url="file://D:/apache/PrimaryFeather-Starling-Framework-1a50854-1.4.1/starling/src" isTestSource="false" />
     </content>
@@ -70,6 +185,19 @@
       <sourceFolder url="file://$MODULE_DIR$/../pogo/games/monopoly/as3" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/../pogo/games/scrabble/as3" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/../pogo/games/spades2/as3" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../pogo/games/risk/as3" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../pogo/games/allin/as3" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../pogo/games/canasta/as3" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../pogo/games/mlslots/as3" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../pogo/games/peaks/as3" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../pogo/games/chess2/as3" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../pogo/games/yahtzee/as3" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../pogo/games/freebingo/as3" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../pogo/games/bowling/as3" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../pogo/games/gin2/as3" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../pogo/games/poppit2/as3" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../pogo/games/mahjong2/as3" isTestSource="false" />
+      <excludeFolder url="file://$MODULE_DIR$/../pogo/games/mahjong2/as3/com/pogo/game/_archive" />
     </content>
     <content url="file://$MODULE_DIR$">
       <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
@@ -79,6 +207,8 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" exported="" name="starling" level="project" />
     <orderEntry type="library" exported="" name="pogoUI_skins" level="project" />
+    <orderEntry type="library" exported="" name="DConsole2.3" level="project" />
+    <orderEntry type="library" exported="" name="MonsterDebugger" level="project" />
   </component>
 </module>
 
