@@ -104,8 +104,10 @@ public class ChessMultiListDemo extends Panel {
     protected function addedToStageHandler(event:Event):void
     {
 //        this.removeEventListener(Event.ADDED_TO_STAGE, addedToStageHandler);
+
         list = new MultiList(3, false, true);
 		list.setPreferredDisplayedRows(6);
+//        list.height = 115;
         list.height = 18 * list.getPreferredDisplayedRows() + 2;
 //		list.setFillColumn(-1);
 //		list.setBackground( COLOR_LIGHT_TAN );
@@ -121,11 +123,17 @@ public class ChessMultiListDemo extends Panel {
         scrollConfig.decrementButtonDownBound = new Rectangle(18,0,18,17);
         scrollConfig.incrementButtonBound = new Rectangle(0,93,18,17);
         scrollConfig.incrementButtonDownBound = new Rectangle(18,93,18,17);
-        scrollConfig.minimumTrackBound = new Rectangle(0,17,18,46);
-        scrollConfig.maximumTrackBound = new Rectangle(0,17,18,46);
-        scrollConfig.minimumTrackDisabledBound = new Rectangle(0,17,18,46);
-        scrollConfig.maximumTrackDisabledBound = new Rectangle(0,17,18,46);
+        scrollConfig.minimumTrackBound = new Rectangle(0,17,18,47);
+        scrollConfig.maximumTrackBound = new Rectangle(0,17,18,47);
+        scrollConfig.minimumTrackDisabledBound = new Rectangle(18,17,18,38);
+        scrollConfig.maximumTrackDisabledBound = new Rectangle(18,55,18,38);
         display.scrollConfig = scrollConfig;
+//        display.dataChangeOnComplete = function():void {
+//            var client:ChessClient= ChessClient(chessPanel.getClient());
+//            if (wasSelected || !client.isWatcher()) {
+//                selectLastMove();
+//            }
+//        };
 //		list.getScrollbar().setBackground( COLOR_LIGHT_PURPLE );
 //		list.getScrollbar().setColorScheme( HISTORY_COLORSCHEME );
 
@@ -231,8 +239,7 @@ public class ChessMultiListDemo extends Panel {
 
         nextColor = 1- nextColor;
 
-//        var client:ChessClient= ChessClient(chessPanel.getClient());
-        if (wasSelected/* || !client.isWatcher()*/) {
+        if (wasSelected) {
             selectLastMove();
         }
 
